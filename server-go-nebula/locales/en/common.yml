@@ -1,0 +1,4 @@
+
+success: "success"
+fail: "fail"
+server_error: "服务器错误"

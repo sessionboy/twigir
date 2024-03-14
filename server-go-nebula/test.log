@@ -1,0 +1,1 @@
+2021-05-01T15:32:20.665+0800	ERROR	users/auth.go:28	Error fetching URL /auth/register : Error = 请输入8-16位合法的密码

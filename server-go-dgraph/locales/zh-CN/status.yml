@@ -1,0 +1,18 @@
+
+required_to_quote: "to_quote不能为空"
+err_status_type: "错误的status_type类型"
+err_status_type_to_reply: "status_type和to_reply不匹配"
+required_to_reply: "to_reply不能为空"
+required_to_user: "to_user不能为空"
+fail_status_pub: "发布失败"
+fail_status_reply: "回复失败"
+required_image: "请上传图片"
+required_video: "请上传视频"
+
+err_favorited: "您已点赞该贴文，不能再次点赞"
+fail_favorite: "点赞失败"
+delete_favorite: "删除贴文失败"
+not_found_status: "该贴文不存在或已删除"
+err_frequently_pub: "您发文过于频繁，请1分钟后再尝试"
+fail_restatus: "转帖失败"
+reply_invalid_status: "该贴文属于无效状态，您不能回复" # 贴文作者账号已注销

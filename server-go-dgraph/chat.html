@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Chat Example</title>
+<script type="text/javascript">
+function genID(length){
+   return Number(Math.random().toString().substr(3,length) + Date.now()).toString(36);
+}
+function Query(variable){
+    var query = window.location.search.substring(1);
+    var vars = query.split("&");
+    for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if(pair[0] == variable){return pair[1];}
+    }
+    return("");
+}
+window.onload = function () {
+    var conn;
+    var msg = document.getElementById("msg");
+    var log = document.getElementById("log");
+    var default_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjB4NTEiLCJuYW1lIjoi6auY6aKW5rWgIiwidXNlcm5hbWUiOiJnYW95aW5neGkiLCJyb2xlIjowLCJ2ZXJpZmllZCI6ZmFsc2UsImV4cCI6MTYyNDE2MTU0MCwiaXNzIjoidHdpZ2lyIn0.XSIlLNwevmlPnKN5nPNZisz3mTdOEk7w4_iyCETwA6Q"
+    var token = Query("token")||default_token
+    var to = Query("to")
+    var conversation = Query("conversation")
+    function appendLog(item) {
+        var doScroll = log.scrollTop > log.scrollHeight - log.clientHeight - 1;
+        log.appendChild(item);
+        if (doScroll) {
+            log.scrollTop = log.scrollHeight - log.clientHeight;
+        }
+    }
+
+    document.getElementById("form").onsubmit = function () {
+        fetch("/api/v1/message/"+conversation,{
+            body: JSON.stringify({
+                msg: msg.value,
+                serialid: genID(12)
+            }),
+            headers: {
+                'Authorization': token,
+                'content-type': 'application/json'
+            },
+            method: 'POST',
+        })
+        .then(res => res.json())
+        .then(data => {
+            // var item = document.createElement("div");
+            // item.className = "item_right"
+            // item.innerText = "[我]："+msg.value;
+            // appendLog(item);
+            // msg.value = "";
+            msg.value = "";
+        })
+        .catch(error => console.error(error))
+        return false;
+        // if (!conn) {
+        //     return false;
+        // }
+        // if (!msg.value) {
+        //     return false;
+        // }
+        // const m = JSON.stringify({
+        //     type: "single",
+        //     roomid,
+        //     mas_type: 1,
+        //     serialid: genID(12),
+        //     data: msg.value,
+        //     to
+        // })
+        // conn.send(m);
+        // var item = document.createElement("div");
+        // item.className = "item_right"
+        // item.innerText = "[我]："+msg.value;
+        // appendLog(item);
+        // msg.value = "";
+        // return false;
+    };
+
+    if (window["WebSocket"]) {
+        var url = "ws://localhost:8080/api/v1/ws?token="+token
+        conn = new WebSocket(url);
+        conn.onclose = function (evt) {
+            var item = document.createElement("div");
+            item.innerHTML = "<b>Connection closed.</b>";
+            appendLog(item);
+        };
+        conn.onmessage = function (evt) {
+            var messages = evt.data.split('\n');
+            for (var i = 0; i < messages.length; i++) {                
+                var data = JSON.parse(messages[i])
+                console.log(data)
+                var item = document.createElement("div");
+                item.className = "item_left"
+                item.innerText = "["+data.data.sender.name+"]:"+data.data.msg;
+                appendLog(item);
+            }
+        };
+    } else {
+        var item = document.createElement("div");
+        item.innerHTML = "<b>Your browser does not support WebSockets.</b>";
+        appendLog(item);
+    }
+};
+</script>
+<style type="text/css">
+html {
+    overflow: hidden;
+}
+
+body {
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background: gray;
+}
+
+#log {
+    background: white;
+    margin: 0;
+    padding: 0.5em 0.5em 0.5em 0.5em;
+    position: absolute;
+    top: 0.5em;
+    left: 0.5em;
+    right: 0.5em;
+    bottom: 3em;
+    overflow: auto;
+}
+
+#form {
+    padding: 0 0.5em 0 0.5em;
+    margin: 0;
+    position: absolute;
+    bottom: 1em;
+    left: 0px;
+    width: 100%;
+    overflow: hidden;
+}
+
+</style>
+</head>
+<body>
+<div id="log"></div>
+<form id="form">
+    <input type="submit" value="Send" />
+    <input type="text" id="msg" size="64" autofocus />
+</form>
+</body>
+</html>

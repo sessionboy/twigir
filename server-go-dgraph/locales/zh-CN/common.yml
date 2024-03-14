@@ -1,0 +1,9 @@
+
+success: "操作成功"
+fail: "操作失败"
+server_error: "服务器开小差了，请您重试"
+format_args: "参数有误"
+invalid_id: "无效的id"
+fail_socket_conn: "socket连接失败，请检查网络是否异常"
+fail_send: "发送失败"
+invalid_code: "验证码不正确"

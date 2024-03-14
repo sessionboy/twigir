@@ -1,0 +1,9 @@
+fail_status_pub: "发布失败"
+fail_status_reply: "回复失败"
+required_photo: "请上传照片"
+required_video: "请上传视频"
+
+err_favorited: "您已点赞该贴文，不能再次点赞"
+fail_favorite: "点赞失败"
+delete_favorite: "删除贴文失败"
+not_found_status: "该贴文不存在"

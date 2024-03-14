@@ -1,0 +1,176 @@
+
+type User {
+  id: ID!
+  name: String! @search(by: [hash])
+  username: String! @id @search(by: [hash])
+  phone_code: String!
+  phone_number: String! @search(by: [hash])
+  password: String!
+  email: String @search(by: [hash])
+  lang: String @search
+  avatar_url: String
+  description: String @search(by: [term])
+  role: Role @search
+  location: String
+
+  profile_cover_url: String
+  profile_default_cover: Boolean
+  profile_gender: Gender
+  profile_birthday: String
+  profile_school: String @search
+  profile_isgraduation: Boolean
+  profile_job: String @search
+  profile_website: String
+  profile_emotion: String
+  profile_country: String @search
+  profile_province: String
+  profile_city: String @search
+
+  isverified: Boolean @search
+  verified: Verified
+
+  followers: [User] @hasInverse(field: followings)
+  followings: [User] @hasInverse(field: followers)
+  followers_count: Int @search
+  followings_count: Int @search
+  friends_count: Int @search
+  shields: [User]
+  sign_records:[SignRecord]
+
+  receive_chat: Boolean
+  receive_like_notification: Boolean
+  receive_reply_notification: Boolean
+  
+  created_at: DateTime! @search
+  last_sign_at: DateTime @search
+  last_publish_at: DateTime @search
+  update_at: DateTime
+}
+
+type Verified {
+  id: ID!
+  type: VerifiedType
+  name: String! @id @search(by: [hash])
+  isgroup: Boolean
+  category: VerifiedCategory
+  level: Int
+  description: String @search(by: [term])
+  create_at: DateTime 
+  update_at: DateTime 
+}
+
+interface Category {
+  id: ID!
+  creater: User
+  name: String! @id @search(by: [hash])
+  description: String 
+  create_at: DateTime 
+  update_at: DateTime 
+}
+
+type VerifiedCategory implements Category {
+  root: VerifiedCategory
+  parent: VerifiedCategory
+  childs: [VerifiedCategory]
+}
+
+type SignRecord {
+  id: ID!
+  platform: String
+  ip: String
+  device: String
+  browser: String
+  signup: Boolean
+  create_at: DateTime 
+}
+
+type GroupCategory implements Category {
+  root: GroupCategory
+  parent: GroupCategory
+  childs: [GroupCategory]
+}
+
+type Group {
+  id: ID!
+  creater: User
+  name: String! @id @search(by: [hash])
+  description: String @search(by: [term])
+  announcement: String
+  avatar_url: String
+  cover_url: String
+  default_cover: Boolean
+  category: GroupCategory
+  isverified: Boolean @search
+  verified: Verified
+  owner: Member
+  admins: [Member]
+  members: [Member]
+  members_count: Int @search
+  status_count: Int @search
+  
+  create_at: DateTime 
+  update_at: DateTime 
+}
+
+type Member {
+  id: ID!
+  user: User
+  group: Group
+  is_owner: Boolean @search
+  is_admin: Boolean @search
+  level: Int @search
+  isAnonymously: Boolean
+  aliasName: String @search(by: [hash])
+  create_at: DateTime 
+  update_at: DateTime 
+}
+
+interface Post {
+  id: ID!
+  author: User!
+  text: String @search(by: [fulltext])
+
+  replies: [Reply]
+  replies_count: Int @search
+  forwards: [User] 
+  forwards_count: Int @search
+  favorites: [User] 
+  favorites_count: Int @search
+
+  hastags: [String] @search
+  urls: [String] @search
+  images: [String] @search
+
+  create_at: DateTime 
+  update_at: DateTime 
+}
+
+type Status implements Post {
+  group: Group
+  is_forward: Boolean @search
+  forward_to_status: Status
+  video: String
+  music: String
+  lives: [String]
+}
+
+type Reply implements Post {
+  is_to_reply: Boolean @search
+  to_reply: Reply
+}
+
+enum Role {
+  User
+  Admin
+  Super
+}
+
+enum Gender {
+  Male
+  Female
+}
+
+enum VerifiedType {
+  Personal
+  Organization
+}

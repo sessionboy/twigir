@@ -1,0 +1,5 @@
+{
+  "err.group.not_found": "Group not found: $group",
+  "err.group.update.unauthorized": "You are not leader or administrator of the group, so you cannot perform this operation",
+  "err.group.exist_name": "The group name has been used"
+}

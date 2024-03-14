@@ -1,0 +1,55 @@
+[package]
+name = "server"
+version = "0.1.0"
+authors = ["zhihelive <xzhihe@sina.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+#core_framework
+actix = "0.9.0"
+actix-web = "2.0"
+actix-rt = "1.1.1"
+actix-cors = "0.2.0"
+actix-identity = "0.2.1"
+regex = "1"
+
+websocket = { path = "websocket" }
+
+# database
+# dgraph-tonic = {version = "0.6.3", features = ["all"]}
+dgraph-tonic = "0.8.0"
+
+# 哈希密码
+rust-argon2 = "0.8.2"
+uuid = { version = "0.8.1", features = ["v4"] }
+
+# token
+jsonwebtoken = "7.1.0"
+csrf-token = { git = "https://git@github.com/werner/csrf-token.git", branch="v0.2.x" }
+
+#json_parsers
+serde_json = "1.0.53"
+serde = "1.0.110"
+serde_derive = "1.0.111"
+
+futures = "0.3.5"
+dotenv = "0.15.0"
+dotenv_codegen = "0.15.0"
+lazy_static = "1.4.0"
+chrono = "0.4.11"
+smart-default = "0.6.0"
+accept-language = "2.0.0"
+woothee = "0.11.0"
+anyhow = "1.0"
+
+# 语言本地化
+json-gettext = "3.2.3"
+
+# 校验
+validator = "0.10.0"
+validator_derive = "0.10.0"
+
+# 错误处理
+thiserror = "1.0.19"

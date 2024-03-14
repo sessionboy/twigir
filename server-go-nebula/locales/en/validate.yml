@@ -1,0 +1,6 @@
+
+name: "Please enter a valid name, limited to 2-15 characters"
+username: "Please enter a valid username, limited to 2-15 characters"
+phone: "Please enter a valid phone number"
+password: "Please enter a valid password with 8-16 characters"
+bio_len: "The bio cannot exceed 200 characters"

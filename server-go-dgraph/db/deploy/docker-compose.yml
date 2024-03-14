@@ -1,0 +1,31 @@
+version: "3.2"
+
+services:
+  # Dgraph Zero控制Dgraph集群，将服务器分配给组并在服务器组之间重新平衡数据。
+  zero:
+    image: dgraph/dgraph:v21.03.0
+    container_name: dgraph-zero
+    volumes:
+      - /home/dgraph/store:/dgraph
+    ports:
+      - 5080:5080
+      - 6080:6080
+    restart: always
+    environment:
+      LOG_DIR: "/home/dgraph/zero_logs.txt"
+    command: dgraph zero --my=zero:5080
+
+  # Dgraph Alpha托管谓词和索引。
+  alpha:
+    image: dgraph/dgraph:v21.03.0
+    container_name: dgraph-alpha
+    volumes:
+      - /home/dgraph/store:/dgraph
+    ports:
+      - 8080:8080
+      - 9080:9080
+    restart: always
+    environment:
+      LOG_DIR: "/home/dgraph/alpha_logs.txt"
+    command: dgraph alpha --security whitelist=0.0.0.0/0 --my=alpha:7080 --zero=zero:5080
+

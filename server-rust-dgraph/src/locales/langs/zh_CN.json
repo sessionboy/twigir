@@ -1,0 +1,27 @@
+{
+  "common.success": "成功",
+  "common.failure": "失败",
+  "common.unknown": "未知错误",
+  "common.action_failure": "操作失败",
+  "common.err.too_frequently": "操作太频繁，请1分钟后再尝试",
+
+  "user.err.unauthorized": "未登录",
+  "user.err.login.input_verify": "参数错误",
+  "user.err.input_verify": "参数错误",
+  "user.err.not_found": "该用户不存在",
+  "user.err.exist": "账号已被注册，请检查名称、主名或手机号",
+  "user.err.exist_name": "该名称已存在",
+  "user.err.exist_username": "该主名已存在",
+  "user.err.exist_phone": "该号码已注册",
+  "user.err.exist_email": "该邮箱已注册",
+  "user.err.password_mismatch": "密码不正确",
+  "user.err.old_password_mismatch": "旧密码不正确",
+  "user.err.logout": "已退出登录",
+  "user.err.cannot_follow_self": "不能关注自己",
+  "user.err.cannot_shield_self": "不能屏蔽自己",
+  
+  "status.err.not_found": "该帖子不存在，或已删除",
+  "status.err.delete.not_owner": "您不是该帖子的作者，不能删除该帖子",
+  "reply.err.delete.not_owner": "您不是该回复的作者，不能删除该回复",
+  "reply.err.not_found": "该回复不存在，或已删除"
+}
